@@ -18,6 +18,7 @@ namespace BlogApi.Controllers
         }
         public IHttpActionResult Post(Post post)
         {
+            post.UserId = 1; 
             pr.Insert(post);
             return Created("api/Users/" + post.PostId, post);
         }
@@ -35,7 +36,7 @@ namespace BlogApi.Controllers
 
         public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
         {
-            post.UserId = id;
+            post.PostId = id;
             pr.Update(post);
             return Ok(post);
         }
