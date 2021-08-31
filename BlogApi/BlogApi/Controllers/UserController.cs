@@ -13,12 +13,14 @@ namespace BlogApi.Controllers
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
+        BlogApiDbContext context = new BlogApiDbContext();
         UserRepository ur = new UserRepository();
 
         [Route(""),UserAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(ur.GetAllData());  
+         
         }
 
         [Route("")]
@@ -28,7 +30,7 @@ namespace BlogApi.Controllers
             return Created("api/Users/"+user.UserId,user);  
         }
 
-        [Route("{id}")]
+        [Route("{id}"), UserAuthentication]
         public IHttpActionResult Get(int id)
         {
             var user=ur.Get(id);
@@ -40,7 +42,7 @@ namespace BlogApi.Controllers
             return Ok(user);
         }
 
-        [Route("{id}")]
+        [Route("{id}"), UserAuthentication]
         public IHttpActionResult Put([FromUri] int id, [FromBody] User user)
         {
             user.UserId = id;
@@ -48,11 +50,34 @@ namespace BlogApi.Controllers
             return Ok(user); 
         }
 
-        [Route("{id}")]
+        [Route("{id}"),UserAuthentication]
         public IHttpActionResult Delete(int id)
         {
             ur.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        //[Route("")]
+        //public IHttpActionResult PostLogin(User user)
+        //{
+        //    var checkedUser = context.Users.Where(x => x.Username.Equals(user.Username) && x.Password.Equals(user.Password)).FirstOrDefault();
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        if (checkedUser != null)
+        //        {
+        //            return Ok(checkedUser);
+        //        }
+        //        else
+        //        {
+        //            return Unauthorized();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //}
     }
-}
+ }
+

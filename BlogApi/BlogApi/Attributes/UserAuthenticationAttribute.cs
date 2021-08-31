@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,11 +8,18 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using BlogApi.Repository;
+using System.Threading;
+using System.Security.Principal;
+using BlogApi.Repositories;
 
 namespace BlogApi.Attributes
 {
+
     public class UserAuthenticationAttribute:AuthorizationFilterAttribute
     {
+    
+
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             base.OnAuthorization(actionContext);
@@ -25,16 +33,36 @@ namespace BlogApi.Attributes
                 string decotedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodeString));
                 string[] splittedText = decotedString.Split(new char[] { ':' });
                 string username = splittedText[0];
-                string passord = splittedText[1];
+                string password = splittedText[1];
 
-                if (true)
+                UserRepository ur = new UserRepository();
+
+                ur.GetUsernamePass(username, password);
+            
+
+                if (username!=null && password!=null)
                 {
-
+                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+                    
                 }
                 else
                 {
+
                     actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
+
+
+                //if (UserRepository.Login(username,password))
+                //{
+
+                //    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+
+                //}
+                //else
+                //{
+
+                //    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+                //}
             }
         }
 
