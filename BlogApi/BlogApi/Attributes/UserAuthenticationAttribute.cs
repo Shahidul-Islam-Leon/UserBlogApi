@@ -35,13 +35,14 @@ namespace BlogApi.Attributes
                 string username = splittedText[0];
                 string password = splittedText[1];
 
-                UserRepository ur = new UserRepository();
+               // UserRepository ur = new UserRepository();
 
-                ur.GetUsernamePass(username, password);
+              //  ur.GetUsernamePass(username, password);
             
 
-                if (username!=null && password!=null)
+                if (UserRepository.Login(username,password))
                 {
+
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
                     
                 }

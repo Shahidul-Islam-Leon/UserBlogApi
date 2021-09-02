@@ -1,24 +1,31 @@
-﻿using BlogApi.Models;
+﻿using BlogApi.Attributes;
+using BlogApi.Models;
 using BlogApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace BlogApi.Controllers
 {
+    [RoutePrefix("api/Post")]
     public class PostController : ApiController
     {
         PostRepository pr = new PostRepository();
+        [Route(""),UserAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(pr.GetAllData());
         }
+
+        [Route("")]
         public IHttpActionResult Post(Post post)
         {
-            post.UserId = 1; 
+            post.UserId = 1;
+            string Uname = Thread.CurrentPrincipal.Identity.Name;
             pr.Insert(post);
             return Created("api/Users/" + post.PostId, post);
         }

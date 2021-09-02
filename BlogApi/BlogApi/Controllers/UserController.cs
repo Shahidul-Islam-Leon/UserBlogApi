@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace BlogApi.Controllers
@@ -19,15 +20,33 @@ namespace BlogApi.Controllers
         [Route(""),UserAuthentication]
         public IHttpActionResult Get()
         {
-            return Ok(ur.GetAllData());  
+            if (ModelState.IsValid)
+            {
+                return Ok(ur.GetAllData());
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+           
          
         }
 
         [Route("")]
         public IHttpActionResult Post(User user)
         {
-            ur.Insert(user);
-            return Created("api/Users/"+user.UserId,user);  
+            var u = ur.GetUsername(user.Username);
+            if (ModelState.IsValid && u==false )
+            {
+                
+                ur.Insert(user);
+                return Created("api/Users/" + user.UserId, user);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+           
         }
 
         [Route("{id}"), UserAuthentication]
@@ -35,49 +54,80 @@ namespace BlogApi.Controllers
         {
             var user=ur.Get(id);
 
-            if (user==null)
+            if (ModelState.IsValid)
             {
-        return StatusCode(HttpStatusCode.NoContent);
+                if (user == null)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else
+                { 
+                    return Ok(user); 
+                }                          
             }
-            return Ok(user);
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
         }
 
         [Route("{id}"), UserAuthentication]
         public IHttpActionResult Put([FromUri] int id, [FromBody] User user)
         {
             user.UserId = id;
-            ur.Update(user);          
-            return Ok(user); 
+            if(ModelState.IsValid)
+            {
+                ur.Update(user);
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+            
         }
 
         [Route("{id}"),UserAuthentication]
         public IHttpActionResult Delete(int id)
         {
-            ur.Delete(id);
-            return StatusCode(HttpStatusCode.NoContent);
+            if(ModelState.IsValid)
+            {
+                ur.Delete(id);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
-        //[Route("")]
-        //public IHttpActionResult PostLogin(User user)
-        //{
-        //    var checkedUser = context.Users.Where(x => x.Username.Equals(user.Username) && x.Password.Equals(user.Password)).FirstOrDefault();
-        //    if (ModelState.IsValid)
-        //    {
+        [Route("Login"),UserAuthentication]
+        [HttpPost]
+        public IHttpActionResult PostLogin( User user)
+        {
+            var checkedUser = context.Users.Where(x => x.Username.Equals(user.Username) && x.Password.Equals(user.Password)).FirstOrDefault();
+            
+              //  string Uname = Thread.CurrentPrincipal.Identity.Name;
 
-        //        if (checkedUser != null)
-        //        {
-        //            return Ok(checkedUser);
-        //        }
-        //        else
-        //        {
-        //            return Unauthorized();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //}
+                if (checkedUser != null)
+                {
+                   
+                    return Ok(checkedUser);
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
+        }
+        [Route("ExistUser")]
+        public IHttpActionResult PostUserExist(User user)
+        {
+            var u = ur.GetUsername(user.Username);
+            return Ok(u);
+
+        }
     }
  }
 

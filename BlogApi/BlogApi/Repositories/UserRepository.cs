@@ -11,17 +11,17 @@ namespace BlogApi.Repositories
     {
 
         BlogApiDbContext context = new BlogApiDbContext();
-        public User GetUsernamePass(string username,string password)
-        {
-           User user = new User();
-           var getUsername= context.Users.Where(x => x.Username==username).FirstOrDefault();
-           var getPassword= context.Users.Where(x => x.Password==password).FirstOrDefault();
+        //public User GetUsernamePass(string username,string password)
+        //{
+        //  // User user = new User();
+        //   var getUsername= context.Users.Where(x => x.Username==username && x.Password==password).FirstOrDefault();
 
-            user.Username = getUsername.Username;
-            user.Password = getPassword.Password;
 
-            return null;
-        }
+        //   // user.Username = getUsername.Username;
+        //  //  user.Password = getUsername.Password;
+
+        //    return getUsername;
+        //}
 
         public static bool Login(string username, string password)
         {
@@ -32,6 +32,13 @@ namespace BlogApi.Repositories
 
         }
 
+        public  bool GetUsername(string username)
+        {
+            using (BlogApiDbContext context = new BlogApiDbContext())
+            {
+                return context.Users.Any(x => x.Username == username);
+            }
+        }
 
     }
 }
