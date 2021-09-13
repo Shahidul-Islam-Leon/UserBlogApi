@@ -229,6 +229,14 @@
     <Compile Include="Migrations\202108231936442_initial.designer.cs">
       <DependentUpon>202108231936442_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109111240451_PostTitle.cs" />
+    <Compile Include="Migrations\202109111240451_PostTitle.designer.cs">
+      <DependentUpon>202109111240451_PostTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109121559120_final.cs" />
+    <Compile Include="Migrations\202109121559120_final.designer.cs">
+      <DependentUpon>202109121559120_final.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlogApiDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -256,6 +264,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202108231936442_initial.resx">
       <DependentUpon>202108231936442_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109111240451_PostTitle.resx">
+      <DependentUpon>202109111240451_PostTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109121559120_final.resx">
+      <DependentUpon>202109121559120_final.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

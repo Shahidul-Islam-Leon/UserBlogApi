@@ -128,6 +128,13 @@ namespace BlogApi.Controllers
             return Ok(u);
 
         }
+
+        [Route("{id}/Post")]
+        public IHttpActionResult GetPostByUserID(int id)
+        {
+            PostRepository pr = new PostRepository();
+            return Ok(pr.getAllPostByUser(id));
+        }
     }
  }
 

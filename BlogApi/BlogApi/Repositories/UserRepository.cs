@@ -11,6 +11,7 @@ namespace BlogApi.Repositories
     {
 
         BlogApiDbContext context = new BlogApiDbContext();
+
         //public User GetUsernamePass(string username,string password)
         //{
         //  // User user = new User();

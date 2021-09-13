@@ -15,21 +15,22 @@ namespace BlogApi.Controllers
     public class PostController : ApiController
     {
         PostRepository pr = new PostRepository();
-        [Route(""),UserAuthentication]
+        [Route(""), UserAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(pr.GetAllData());
         }
 
-        [Route("")]
+        [Route(""),UserAuthentication]
         public IHttpActionResult Post(Post post)
         {
-            post.UserId = 1;
+           
             string Uname = Thread.CurrentPrincipal.Identity.Name;
             pr.Insert(post);
             return Created("api/Users/" + post.PostId, post);
         }
 
+        [Route("{id}"),UserAuthentication]
         public IHttpActionResult Get(int id)
         {
             var post = pr.Get(id);
@@ -53,6 +54,15 @@ namespace BlogApi.Controllers
             pr.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
+        [Route("{id}/Comment")]
+        public IHttpActionResult GetCommentByPostId(int id)
+        {
+            CommentRepository cr = new CommentRepository();
+            return Ok(cr.getAllCommentByPost(id));
+        }
     }
 }
+
 
