@@ -298,3 +298,4 @@ C:\Users\SHAHI\Desktop\UserBlogApi\BlogApi\BlogApi\obj\Debug\BlogApi.dll
 C:\Users\SHAHI\Desktop\UserBlogApi\BlogApi\BlogApi\obj\Debug\BlogApi.pdb
 C:\Users\SHAHI\Desktop\UserBlogApi\BlogApi\BlogApi\obj\Debug\BlogApi.Migrations.PostTitle.resources
 C:\Users\SHAHI\Desktop\UserBlogApi\BlogApi\BlogApi\obj\Debug\BlogApi.Migrations.final.resources
+C:\Users\SHAHI\Desktop\UserBlogApi\BlogApi\BlogApi\obj\Debug\BlogApi.Migrations.test.resources

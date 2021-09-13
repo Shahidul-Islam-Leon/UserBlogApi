@@ -237,6 +237,10 @@
     <Compile Include="Migrations\202109121559120_final.designer.cs">
       <DependentUpon>202109121559120_final.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109131518578_test.cs" />
+    <Compile Include="Migrations\202109131518578_test.designer.cs">
+      <DependentUpon>202109131518578_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlogApiDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -270,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109121559120_final.resx">
       <DependentUpon>202109121559120_final.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109131518578_test.resx">
+      <DependentUpon>202109131518578_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

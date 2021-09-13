@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace BlogApi.Controllers
 {
-    [RoutePrefix("api/user")]
+    [RoutePrefix("api/users")]
     public class UserController : ApiController
     {
         BlogApiDbContext context = new BlogApiDbContext();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace BlogApi.Models
         public string Email { get; set; }
         public string Password { get; set; }
        
-        public ICollection<Post> Posts { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Post> Posts { get; set; }
        
     }
 }

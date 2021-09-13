@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace BlogApi.Controllers
 {
-    [RoutePrefix("api/Comment")]
+    [RoutePrefix("api/Comments")]
     public class CommentController : ApiController
     {
         CommentRepository cr = new CommentRepository();
@@ -46,6 +46,8 @@ namespace BlogApi.Controllers
         [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
+            var comment = cr.Get(id);
+            var userId = comment.Post.UserId;
             cr.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }

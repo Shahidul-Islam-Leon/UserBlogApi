@@ -13,16 +13,16 @@ namespace BlogApi.Models
     {
         public BlogApiDbContext() : base("BlogApiDb")
         {
-           Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogApiDbContext, Configuration>());
+           //Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogApiDbContext, Configuration>());
         }
 
-        [JsonIgnore, XmlIgnore]
+        //[JsonIgnore, XmlIgnore]
         public DbSet<User> Users { get; set; }
 
-        [JsonIgnore, XmlIgnore]
+        //[JsonIgnore, XmlIgnore]
         public DbSet<Post> Posts { get; set; }
 
-        [JsonIgnore, XmlIgnore]
+        //[JsonIgnore, XmlIgnore]
         public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -14,9 +14,10 @@ namespace BlogApi.Models
         [Required]
         public string CommentContent { get; set; }
 
-
+        
         public string Username { get; set; }
-       
+
+       [ForeignKey("Post")]
         public int PostId { get; set; }
         public Post Post { get; set; }
 

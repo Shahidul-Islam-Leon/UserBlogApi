@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace BlogApi.Controllers
 {
-    [RoutePrefix("api/Post")]
+    [RoutePrefix("api/Posts")]
     public class PostController : ApiController
     {
         PostRepository pr = new PostRepository();
