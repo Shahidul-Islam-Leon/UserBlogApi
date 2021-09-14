@@ -44,7 +44,7 @@ namespace BlogApi.Attributes
                 {
 
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
-                    
+                                                         
                 }
                 else
                 {

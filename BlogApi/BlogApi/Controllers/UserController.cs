@@ -20,16 +20,10 @@ namespace BlogApi.Controllers
         [Route(""),UserAuthentication]
         public IHttpActionResult Get()
         {
-            if (ModelState.IsValid)
-            {
+            
                 return Ok(ur.GetAllData());
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
-           
-         
+          
+                 
         }
 
         [Route("")]
@@ -75,31 +69,21 @@ namespace BlogApi.Controllers
         [Route("{id}"), UserAuthentication]
         public IHttpActionResult Put([FromUri] int id, [FromBody] User user)
         {
-            user.UserId = id;
-            if(ModelState.IsValid)
-            {
+                user.UserId = id;          
                 ur.Update(user);
                 return Ok(user);
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+          
             
         }
 
         [Route("{id}"),UserAuthentication]
         public IHttpActionResult Delete(int id)
         {
-            if(ModelState.IsValid)
-            {
+
+            
                 ur.Delete(id);
                 return StatusCode(HttpStatusCode.NoContent);
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+           
         }
 
         [Route("Login"),UserAuthentication]
@@ -108,7 +92,7 @@ namespace BlogApi.Controllers
         {
             var checkedUser = context.Users.Where(x => x.Username.Equals(user.Username) && x.Password.Equals(user.Password)).FirstOrDefault();
             
-              //  string Uname = Thread.CurrentPrincipal.Identity.Name;
+             string Uname = Thread.CurrentPrincipal.Identity.Name;
 
                 if (checkedUser != null)
                 {

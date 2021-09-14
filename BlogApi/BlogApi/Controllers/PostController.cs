@@ -15,9 +15,13 @@ namespace BlogApi.Controllers
     public class PostController : ApiController
     {
         PostRepository pr = new PostRepository();
+
+
         [Route(""), UserAuthentication]
         public IHttpActionResult Get()
+                   
         {
+            
             return Ok(pr.GetAllData());
         }
 
@@ -25,7 +29,7 @@ namespace BlogApi.Controllers
         public IHttpActionResult Post(Post post)
         {
            
-            string Uname = Thread.CurrentPrincipal.Identity.Name;
+          
             pr.Insert(post);
             return Created("api/Users/" + post.PostId, post);
         }
@@ -45,14 +49,42 @@ namespace BlogApi.Controllers
         public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
         {
             post.PostId = id;
-            pr.Update(post);
-            return Ok(post);
+
+            string Uname = Thread.CurrentPrincipal.Identity.Name;
+            var getById = pr.Get(id);
+            var username = getById.User.Username;
+
+            if(Uname==username)
+            {
+                pr.Update(post);
+                return Ok(post);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+           
         }
 
+        [Route("{id}"), UserAuthentication]
         public IHttpActionResult Delete(int id)
         {
-            pr.Delete(id);
-            return StatusCode(HttpStatusCode.NoContent);
+            
+            string Uname = Thread.CurrentPrincipal.Identity.Name;
+            var getById = pr.Get(id);
+            var username = getById.User.Username;
+
+
+            if (Uname==username)
+            {
+                pr.Delete(id);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+        
         }
 
 
