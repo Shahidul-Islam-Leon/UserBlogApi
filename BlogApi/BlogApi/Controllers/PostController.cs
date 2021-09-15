@@ -45,10 +45,10 @@ namespace BlogApi.Controllers
             }
             return Ok(post);
         }
-
+        [Route("{id}"), UserAuthentication]
         public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
         {
-            post.PostId = id;
+           
 
             string Uname = Thread.CurrentPrincipal.Identity.Name;
             var getById = pr.Get(id);

@@ -3,6 +3,7 @@ using BlogApi.Models;
 using BlogApi.Repositories;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace BlogApi.Controllers
@@ -35,21 +36,55 @@ namespace BlogApi.Controllers
             return Ok(comment);
         }
 
-        [Route("{id}")]
+        [Route("{id}"),UserAuthentication]
         public IHttpActionResult Put([FromUri] int id, [FromBody] Comment comment)
         {
-            comment.CommentId = id;
-            cr.Update(comment);
-            return Ok(comment);
+           
+
+            string Uname = Thread.CurrentPrincipal.Identity.Name;
+            var getById = cr.Get(id);
+            var username = getById.Username;
+
+
+            if (Uname == username)
+            {
+                cr.Update(comment);
+                return Ok(comment);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+
+            }
+          
         }
 
-        [Route("{id}")]
+        [Route("{id}"),UserAuthentication]
         public IHttpActionResult Delete(int id)
         {
-            var comment = cr.Get(id);
-            var userId = comment.Post.UserId;
-            cr.Delete(id);
-            return StatusCode(HttpStatusCode.NoContent);
+
+            string Uname = Thread.CurrentPrincipal.Identity.Name;
+            var getById = cr.Get(id);
+            var username = getById.Username;
+
+           
+            var PostUsername = getById.Post.User.Username;
+
+            if (Uname == username || Uname==PostUsername )
+            {
+                cr.Delete(id);
+                return StatusCode(HttpStatusCode.NoContent);
+
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+
+
+                //var comment = cr.Get(id);
+           // var userId = comment.Post.UserId;
+            
         }
     }
 }
