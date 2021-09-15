@@ -51,10 +51,10 @@ namespace BlogApi.Controllers
            
 
             string Uname = Thread.CurrentPrincipal.Identity.Name;
-            var getById = pr.Get(id);
-            var username = getById.User.Username;
 
-            if(Uname==username)
+            var username = post.User.Username;
+
+            if (Uname==username)
             {
                 pr.Update(post);
                 return Ok(post);

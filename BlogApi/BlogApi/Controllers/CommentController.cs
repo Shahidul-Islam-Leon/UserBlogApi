@@ -12,19 +12,19 @@ namespace BlogApi.Controllers
     public class CommentController : ApiController
     {
         CommentRepository cr = new CommentRepository();
-        [Route("") ]
+        [Route(""), UserAuthentication]
         public IHttpActionResult Get()
         {
             return Ok(cr.GetAllData());
         }
-        [Route("") ]
+        [Route("") , UserAuthentication]
         public IHttpActionResult Post(Comment comment)
         {
             
             cr.Insert(comment);
             return Created("api/Users/" + comment.CommentId, comment);
         }
-        [Route("{id}")]
+        [Route("{id}"), UserAuthentication]
         public IHttpActionResult Get(int id)
         {
             var comment = cr.Get(id);
